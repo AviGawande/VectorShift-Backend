@@ -12,12 +12,12 @@ from integrations.integration_item import IntegrationItem
 
 from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
-CLIENT_ID = 'XXX'
-CLIENT_SECRET = 'XXX'
+CLIENT_ID = '856ccd7f-40d1-481a-8380-0f66d96841d9'
+CLIENT_SECRET = '9b2614d3-a4e8-4e77-9890-059788be4c37'
 encoded_client_id_secret = base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()
 
 REDIRECT_URI = 'http://localhost:8000/integrations/notion/oauth2callback'
-authorization_url = f'https://api.notion.com/v1/oauth/authorize?client_id={CLIENT_ID}&response_type=code&owner=user&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fintegrations%2Fnotion%2Foauth2callback'
+authorization_url = f'https://app.hubspot.com/oauth/authorize?client_id=856ccd7f-40d1-481a-8380-0f66d96841d9&redirect_uri=http://localhost&scope=oauth'
 
 async def authorize_notion(user_id, org_id):
     state_data = {

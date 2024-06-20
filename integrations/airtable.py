@@ -9,18 +9,16 @@ import httpx
 import asyncio
 import base64
 import hashlib
-
 import requests
 from integrations.integration_item import IntegrationItem
 
 from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
-# CLIENT_ID = 'XXX'
-# CLIENT_SECRET = 'XXX'
-CLIENT_ID = '329147ef-ac8b-4863-bced-77b7b195258f'
-CLIENT_SECRET = 'e59aec7edddef2edf4388ef611b151ab5fc85c61f828df909c147085e8ffb4f1'
+
+CLIENT_ID = '856ccd7f-40d1-481a-8380-0f66d96841d9'  # Replace with your actual Client ID
+CLIENT_SECRET = '9b2614d3-a4e8-4e77-9890-059788be4c37'  # Replace with your actual Client Secret
 REDIRECT_URI = 'http://localhost:8000/integrations/airtable/oauth2callback'
-authorization_url = f'https://airtable.com/oauth2/v1/authorize?client_id={CLIENT_ID}&response_type=code&owner=user&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fintegrations%2Fairtable%2Foauth2callback'
+authorization_url = f'https://app.hubspot.com/oauth/authorize?client_id=856ccd7f-40d1-481a-8380-0f66d96841d9&redirect_uri=http://localhost&scope=oauth'
 
 encoded_client_id_secret = base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()
 scope = 'data.records:read data.records:write data.recordComments:read data.recordComments:write schema.bases:read schema.bases:write'
