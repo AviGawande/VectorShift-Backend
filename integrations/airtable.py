@@ -17,8 +17,8 @@ from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
 CLIENT_ID = '856ccd7f-40d1-481a-8380-0f66d96841d9'  # Replace with your actual Client ID
 CLIENT_SECRET = '9b2614d3-a4e8-4e77-9890-059788be4c37'  # Replace with your actual Client Secret
-REDIRECT_URI = 'http://localhost:8000/integrations/airtable/oauth2callback'
-authorization_url = f'https://app.hubspot.com/oauth/authorize?client_id=856ccd7f-40d1-481a-8380-0f66d96841d9&redirect_uri=http://localhost&scope=oauth'
+REDIRECT_URI = 'http://localhost:8000/integrations/hubspot/oauth2callback'
+authorization_url = f'https://app.hubspot.com/oauth/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope=oauth'
 
 encoded_client_id_secret = base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()
 scope = 'data.records:read data.records:write data.recordComments:read data.recordComments:write schema.bases:read schema.bases:write'

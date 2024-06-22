@@ -1,6 +1,6 @@
 import json
 import secrets
-from fastapi import Request, HTTPException
+from fastapi import Request, HTTPException, APIRouter
 from fastapi.responses import HTMLResponse
 import httpx
 import asyncio
@@ -8,14 +8,20 @@ import base64
 from integrations.integration_item import IntegrationItem
 from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
+router = APIRouter()
+
 CLIENT_ID = '856ccd7f-40d1-481a-8380-0f66d96841d9'  # Replace with your actual Client ID
 CLIENT_SECRET = '9b2614d3-a4e8-4e77-9890-059788be4c37'  # Replace with your actual Client Secret
 REDIRECT_URI = 'http://localhost:8000/integrations/hubspot/oauth2callback'
-authorization_url = f'https://app.hubspot.com/oauth/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope=oauth'
+
+# Update the scopes as needed
+scopes = 'crm.objects.contacts.read crm.objects.contacts.write'
+authorization_url = f'https://app.hubspot.com/oauth/authorize?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&scope={scopes}'
 
 encoded_client_id_secret = base64.b64encode(f'{CLIENT_ID}:{CLIENT_SECRET}'.encode()).decode()
 
-async def authorize_hubspot(user_id, org_id):
+@router.post('/authorize_hubspot')
+async def authorize_hubspot(user_id: str, org_id: str):
     state_data = {
         'state': secrets.token_urlsafe(32),
         'user_id': user_id,
@@ -26,6 +32,7 @@ async def authorize_hubspot(user_id, org_id):
 
     return {"authorization_url": f'{authorization_url}&state={encoded_state}'}
 
+@router.get('/oauth2callback_hubspot')
 async def oauth2callback_hubspot(request: Request):
     if request.query_params.get('error'):
         raise HTTPException(status_code=400, detail=request.query_params.get('error'))
@@ -71,7 +78,8 @@ async def oauth2callback_hubspot(request: Request):
     """
     return HTMLResponse(content=close_window_script)
 
-async def get_hubspot_credentials(user_id, org_id):
+@router.post('/credentials')
+async def get_hubspot_credentials(user_id: str, org_id: str):
     credentials = await get_value_redis(f'hubspot_credentials:{org_id}:{user_id}')
     if not credentials:
         raise HTTPException(status_code=400, detail='No credentials found.')
