@@ -10,7 +10,8 @@ from redis_client import add_key_value_redis, get_value_redis, delete_key_redis
 
 router = APIRouter()
 
-CLIENT_ID = '856ccd7f-40d1-481a-8380-0f66d96841d9'  # Replace with your actual Client ID
+# CLIENT_ID = '856ccd7f-40d1-481a-8380-0f66d96841d9'  
+CLIENT_ID = 'XXXX'  #paste your client id from hubspot
 CLIENT_SECRET = '9b2614d3-a4e8-4e77-9890-059788be4c37'  # Replace with your actual Client Secret
 REDIRECT_URI = 'http://localhost:8000/integrations/hubspot/oauth2callback'
 
