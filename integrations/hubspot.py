@@ -114,17 +114,3 @@ async def fetch_items(access_token: str, url: str, aggregated_response: list, af
         if after:
             await fetch_items(access_token, url, aggregated_response, after)
 
-# async def get_items_hubspot(credentials) -> list[IntegrationItem]:
-#     credentials = json.loads(credentials)
-#     url = 'https://api.hubapi.com/crm/v3/objects/contacts'
-#     list_of_integration_item_metadata = []
-#     list_of_responses = []
-
-#     await fetch_items(credentials.get('access_token'), url, list_of_responses)
-#     for response in list_of_responses:
-#         list_of_integration_item_metadata.append(
-#             create_integration_item_metadata_object(response, 'Contact')
-#         )
-#         # Add more logic here if you want to fetch additional items related to contacts
-
-#     return list_of_integration_item_metadata
